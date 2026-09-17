@@ -1,0 +1,10 @@
+{
+  "name": "VNC Unblocker",
+  "build": { "dockerfile": "Dockerfile" },
+  "forwardPorts": [6080, 5901],
+  "portsAttributes": {
+    "6080": { "label": "VNC Desktop - CLICK HERE", "onAutoForward": "openBrowser" }
+  },
+  "postStartCommand": "rm -rf /tmp/.X1-lock /tmp/.X11-unix/X1; vncserver :1 -geometry 1280x800 -depth 24 -localhost no > /tmp/vnc.log 2>&1 & sleep 3; websockify --web /usr/share/novnc/ 6080 localhost:5901 > /tmp/novnc.log 2>&1 & echo 'VNC ready on 6080 password vscode'",
+  "remoteUser": "vscode"
+}
