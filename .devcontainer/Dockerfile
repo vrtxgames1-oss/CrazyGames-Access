@@ -10,13 +10,9 @@ RUN apt-get update && apt-get install -y \
     novnc websockify \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /home/vscode/.vnc && chown -R vscode:vscode /home/vscode/.vnc
-RUN echo "vscode" | vncpasswd -f > /home/vscode/.vnc/passwd && chmod 600 /home/vscode/.vnc/passwd && chown vscode:vscode /home/vscode/.vnc/passwd
-RUN echo '#!/bin/bash
-xrdb $HOME/.Xresources
-xsetroot -solid grey
-export XKL_XMODMAP_DISABLE=1
-/etc/X11/Xsession
-startxfce4 &' > /home/vscode/.vnc/xstartup && chmod +x /home/vscode/.vnc/xstartup && chown vscode:vscode /home/vscode/.vnc/xstartup
+RUN mkdir -p /home/vscode/.vnc
+RUN echo "vscode" | vncpasswd -f > /home/vscode/.vnc/passwd
+RUN chmod 600 /home/vscode/.vnc/passwd
+RUN chown -R vscode:vscode /home/vscode/.vnc
 
 USER vscode
